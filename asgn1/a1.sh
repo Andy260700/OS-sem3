@@ -1,5 +1,5 @@
 #!/bin/bash
-you="hello"
-echo "$you"
-echo '$you'
-echo $you
+you="hello" #initialising variable
+echo "$you" #using double quotes 
+echo '$you' #using single quotes
+echo $you #using nothing

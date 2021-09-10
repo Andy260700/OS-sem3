@@ -4,4 +4,4 @@ read -p 'enter word to search : ' word
 read -p 'enter pattern to replace : ' pattern
 
 # sed -i "s/$word/$pattern/g" $path
-sed -i '' -e "s/$word/$pattern/g" $path
+sed -i '1d' -e "s/$word/$pattern/g" $path
