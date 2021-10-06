@@ -1,0 +1,71 @@
+single row : job id / arrival time / arrival time/ (cpu burst, io burst, cpu burst....), 
+
+FCFS scheduling :
+
+-> hash_table <job_id, ending time>
+->hash_table <job_id, index of current position of burst array >
+-> a single priority queue ( arrival time is priority ) 
+
+push all the jobs to the queue
+
+-> loop while queue not empty:
+    -> pop the queue
+    -> if no more io burts,
+        end time  = arrival_time + cpu_burst
+        note the ending time in the hash_table
+        continue
+    -> else
+        arrival = arrival + cpu_burst + io_burst
+        push it back in the queue
+
+
+priority scheduling :
+
+-> hash_table< job_id, ending_time>
+->hash_table <job_id, index of current position of burst array >
+-> priority_queue_1 ( sorted by ascending arrival )
+-> priority_queue_2 (sorted by ascending priority )
+
+push all jobs to priority_queue_1
+int clock = 0
+
+-> loop while queue_1 not empty:
+    while ( queue_1.top->arrival_time <= clock )
+        a = queue_1.pop()
+        queue_2.push(a)
+
+    b = queue_2.pop()
+
+    clock = clock + b -> current cpu burst
+
+    -> if no more io burts,
+        end time  = arrival_time + cpu_burst
+        note the ending time in the hash_table
+        continue
+    -> else
+        arrival = arrival + cpu_burst + io_burst
+        push it back in the queue_1
+
+Round Robin:
+
+-> hash_table <job_id, ending time>
+->hash_table <job_id, index of current position of burst array >
+-> a single priority queue ( arrival time is priority ) 
+
+push all the jobs to the queue
+
+-> loop while queue not empty:
+    -> pop the queue
+    -> x = current cpu burst - time quanta
+    if x <= 0 && no more bursts:
+        end time  = arrival_time + cpu_burst
+        note the ending time in the hash_table
+        continue
+    else if x <= 0 && there are more burts:
+        move to the next burst
+        arrival = arrival + cpu_burst + io_burst
+        push it back in the queue
+    else 
+        current cpu_burst -= time_quanta
+        arrival = arrival + time_quanta
+        push it back in the queue
