@@ -10,7 +10,7 @@ push all the jobs to the queue
 
 -> loop while queue not empty:
     -> pop the queue
-    -> if no more io burts,
+    -> if no more io burst,
         end time  = arrival_time + cpu_burst
         note the ending time in the hash_table
         continue
