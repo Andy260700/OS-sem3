@@ -8,45 +8,34 @@ public class FCFSScheduler implements Scheduler {
     private ArrayList<Job> jobList;
     private Map<Integer, Integer> endingTimeMap;
 
-    public FCFSScheduler(Scanner sc) {
+    public FCFSScheduler(ArrayList<Job> jobs) {
         PriorityQueue<Job> priorityQueue = new PriorityQueue<>((o1, o2) -> {
             if (o1.jobID == o2.jobID)
                 return 0;
-            if (o1.arrivalTime < o2.arrivalTime) return 1;
-            else if (o1.arrivalTime > o2.arrivalTime) return -1;
+            if (o1.arrivalTime < o2.arrivalTime) return -1;
+            else if (o1.arrivalTime > o2.arrivalTime) return 1;
             else {
-                if (o1.jobID < o2.jobID) return 1;
+                if (o1.jobID < o2.jobID) return -1;
             }
-            return -1;
+            return 1;
         });
         endingTimeMap = new HashMap<>();
-        jobList = new ArrayList<>();
+        jobList = jobs;
 
-        while (sc.hasNextInt()) {
-            int jobID = sc.nextInt();
-            int priority = sc.nextInt();
-            int arrivalTime = sc.nextInt();
-            LinkedList<Integer> burstTimes = new LinkedList<>();
-            while (sc.hasNextInt()) {
-                int burstTime = sc.nextInt();
-                if(burstTime == -1) break;
-                burstTimes.add(burstTime);
-            }
+        priorityQueue.addAll(jobList);
 
-            jobList.add(new Job(jobID, priority, arrivalTime, burstTimes));
-            priorityQueue.addAll(jobList);
-        }
         int time = 0;
         while(!priorityQueue.isEmpty()) {
             Job job = priorityQueue.poll();
+//            System.out.println(job);
             time = Math.max(time, job.arrivalTime);
             var burstTimes = job.getBurstTimes();
             int cpuBurst = burstTimes.removeFirst();
             if(burstTimes.isEmpty()) {
                 endingTimeMap.put(job.jobID, time + cpuBurst);
             } else {
-                int osBurst = burstTimes.removeFirst();
-                priorityQueue.add(new Job(job.jobID, job.priority, time + cpuBurst + osBurst, burstTimes));
+                int ioBurst = burstTimes.removeFirst();
+                priorityQueue.add(new Job(job.jobID, job.priority, time + cpuBurst + ioBurst, burstTimes));
             }
             time += cpuBurst;
         }

@@ -22,4 +22,14 @@ public class Job {
     public LinkedList<Integer> getBurstTimes() {
         return (LinkedList<Integer>) burstTimes.clone();
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "jobID=" + jobID +
+                ", arrivalTime=" + arrivalTime +
+                ", priority=" + priority +
+                ", burstTimes=" + burstTimes +
+                '}';
+    }
 }
