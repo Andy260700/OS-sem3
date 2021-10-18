@@ -52,7 +52,6 @@ public class PriorityScheduler implements Scheduler {
                 }
                 Job job = priorityQueue.poll();
 
-                System.out.println(job);
 
                 var burstTimes = job.getBurstTimes();
                 int cpuBurst = burstTimes.removeFirst();
@@ -65,7 +64,7 @@ public class PriorityScheduler implements Scheduler {
                 }
                 time += cpuBurst;
 
-            } while (!arrivalQueue.isEmpty() || !priorityQueue.isEmpty());
+            } while (!(arrivalQueue.isEmpty() && priorityQueue.isEmpty()));
         }
     }
 
