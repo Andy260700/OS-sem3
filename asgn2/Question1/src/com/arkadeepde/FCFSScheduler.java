@@ -68,4 +68,14 @@ public class FCFSScheduler implements Scheduler {
         }
     }
 
+    @Override
+    public void printTable(){
+        System.out.println("Job ID\tEnd Time\tWaiting Time\tTurnaround Time");
+        for(var job : jobList){
+            System.out.printf("%02d\t\t%05d\t\t%05d\t\t\t%05d\n", job.jobID,
+                    endingTimeMap.get(job.jobID),
+                    endingTimeMap.get(job.jobID) - job.arrivalTime - job.getBurstTimes().parallelStream().reduce(0, (a, b) -> a + b),
+                    endingTimeMap.get(job.jobID) - job.arrivalTime);
+        }
+    }
 }

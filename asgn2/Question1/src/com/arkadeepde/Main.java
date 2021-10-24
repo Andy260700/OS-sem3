@@ -32,10 +32,11 @@ public class Main {
         try(Scanner sc = new Scanner(new File("files/input.txt"))) {
             ArrayList<Job> jobs = parseJobs(sc);
 //            System.out.println(jobs);
-            Scheduler scheduler = new RoundRobinScheduler(jobs);
-            scheduler.waitingTime();
-            scheduler.completionTime();
-            scheduler.turnaroundTime();
+            Scheduler scheduler = new PriorityScheduler(jobs);
+//            scheduler.waitingTime();
+//            scheduler.completionTime();
+//            scheduler.turnaroundTime();
+            scheduler.printTable();
         } catch (IOException e){
             System.out.println("Issue with file");
         }
