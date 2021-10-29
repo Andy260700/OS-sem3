@@ -7,4 +7,5 @@ public interface Scheduler {
     void turnaroundTime();
     void completionTime();
     void waitingTime();
+    void printTable();
 }
