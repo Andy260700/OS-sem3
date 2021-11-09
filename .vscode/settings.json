@@ -63,6 +63,8 @@
         "vector": "cpp",
         "hash_map": "cpp",
         "__functional_03": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "numeric": "cpp",
+        "thread": "cpp"
     }
 }
