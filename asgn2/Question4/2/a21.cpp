@@ -11,17 +11,19 @@
 #define BUFFER_SIZE 1024
 
 int flag = true;
-int fd1 = open("file1.fifo", O_WRONLY);
-int fd2 = open("file2.fifo", O_RDONLY);
+int fd1;
+int fd2;
 void signal_handler(int);
 
 int main()
 {
+    
     unlink("file1.fifo");
     unlink("file2.fifo");
     mkfifo("file1.fifo", 0666);
     mkfifo("file2.fifo", 0666);
-
+    fd1 = open("file1.fifo", O_WRONLY);
+    fd2 = open("file2.fifo", O_RDONLY);
     signal(SIGINT, signal_handler);
 
     std::thread sender([]()

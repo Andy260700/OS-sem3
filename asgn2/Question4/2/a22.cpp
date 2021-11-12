@@ -10,7 +10,6 @@
 
 int main()
 {
-
     int fd1 = open("file1.fifo", O_RDONLY);
     int fd2 = open("file2.fifo", O_WRONLY);
 
