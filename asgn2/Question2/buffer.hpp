@@ -53,7 +53,7 @@ Buffer<T>::Buffer(size_t size) : m_size(size)
     sem_unlink(CONSUMER_SEMAPHORE);
     sem_unlink(RESOURCE_SEMAPHORE);
 
-    producer_semaphore = sem_open(PRODUCER_SEMAPHORE, IPC_CREAT, 0660, m_size);
+    producer_semaphore = sem_open(PRODUCER_SEMAPHORE, O_CREAT, 0660, m_size);
 
     if (producer_semaphore == SEM_FAILED)
     {
@@ -61,7 +61,7 @@ Buffer<T>::Buffer(size_t size) : m_size(size)
         exit(EXIT_FAILURE);
     }
 
-    consumer_semaphore = sem_open(CONSUMER_SEMAPHORE, IPC_CREAT, 0660, 0);
+    consumer_semaphore = sem_open(CONSUMER_SEMAPHORE, O_CREAT, 0660, 0);
 
     if (consumer_semaphore == SEM_FAILED)
     {
@@ -69,7 +69,7 @@ Buffer<T>::Buffer(size_t size) : m_size(size)
         exit(EXIT_FAILURE);
     }
 
-    resource_semaphore = sem_open(RESOURCE_SEMAPHORE, IPC_CREAT, 0660, 1);
+    resource_semaphore = sem_open(RESOURCE_SEMAPHORE, O_CREAT, 0660, 1);
     
     if(resource_semaphore == SEM_FAILED)
     {

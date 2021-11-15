@@ -7,29 +7,49 @@ pid_t spawn_process(std::function<void()> &&function);
 
 int main()
 {
-    Buffer<int> buffer(5);
+    std::cout << "Enter the size of the buffer: ";
+    size_t buffer_size;
+    std::cin >> buffer_size;
+    Buffer<int> buffer(buffer_size);
 
-    spawn_process([&buffer]() 
+    int p, c;
+    std::cout << "Enter the number of producers: ";
+    std::cin >> p;
+    std::cout << "Enter the number of consumers: ";
+    std::cin >> c;
+
+    Counter counter;
+
+    for (int i = 0; i < p; ++i)
     {
-        Producer producer(buffer);
-        for(int i = 0; i < 10; ++i)
-        {
-            producer.produce(i + 1);
-        };
-    });
+        spawn_process([&buffer, c]()
+                      {
+                          Producer producer(buffer);
+                          for (int i = 0; i < c; ++i)
+                          {
+                              producer.produce(1);
+                          };
+                      });
+    }
 
-    spawn_process([&buffer]() 
+    for (int i = 0; i < c; ++i)
     {
-        Consumer consumer(buffer);
-        for(int i = 0; i < 10; ++i)
-        {
-            consumer.consume();
-            sleep(1);
-        };
-    });
+        spawn_process([&buffer, p, &counter]()
+                      {
+                          Consumer consumer(buffer);
+                          for (int i = 0; i < p; ++i)
+                          {
+                              consumer.consume(counter);
+                          };
+                      });
+    }
 
-    wait(NULL);
-    wait(NULL);
+    for(int i = 0; i < (p + c); ++i)
+    {
+        wait(NULL);
+    }
+
+    std::cout << counter.get() << std::endl;
 }
 
 pid_t spawn_process(std::function<void()> &&function)

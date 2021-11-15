@@ -2,6 +2,7 @@
 #define CONSUMER_HPP
 
 #include "buffer.hpp"
+#include "counter.hpp"
 
 template <typename T>
 class Consumer
@@ -15,7 +16,7 @@ private:
 public:
     Consumer(Buffer<T> &buffer);
     ~Consumer();
-    T consume();
+    T consume(Counter&);
 };
 
 template <typename T>
@@ -54,12 +55,12 @@ Consumer<T>::~Consumer()
 }
 
 template <typename T>
-T Consumer<T>::consume()
+T Consumer<T>::consume(Counter &counter)
 {
     sem_wait(consumer_semaphore);
     sem_wait(resource_semaphore);
     T result = m_buffer.pop();
-    std::cout << "Consumed: " << result << std::endl;
+    counter.add(*((int *)(void *)(&result)));
     sem_post(producer_semaphore);
     sem_post(resource_semaphore);
     return result;

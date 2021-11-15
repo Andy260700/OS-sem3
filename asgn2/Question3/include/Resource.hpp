@@ -58,27 +58,27 @@ Resource<T>::Resource(T val)
     sem_unlink(WRITER_SEMAPHORE);
     sem_unlink(READ_TRY);
     sem_unlink(RESOURCE_SEMAPHORE);
-    no_reader_semaphore = sem_open(READER_SEMAPHORE, IPC_CREAT, 0660, 1);
+    no_reader_semaphore = sem_open(READER_SEMAPHORE, O_CREAT, 0660, 1);
     if (no_reader_semaphore == SEM_FAILED)
     {
         std::cout << "ERROR";
         exit(1);
     }
-    no_writer_semaphore = sem_open(WRITER_SEMAPHORE, IPC_CREAT, 0660, 1);
+    no_writer_semaphore = sem_open(WRITER_SEMAPHORE, O_CREAT, 0660, 1);
     if (no_writer_semaphore == SEM_FAILED)
     {
         std::cerr << "ERROR";
         exit(1);
     }
 
-    read_try = sem_open(READ_TRY, IPC_CREAT, 0660, 1);
+    read_try = sem_open(READ_TRY, O_CREAT, 0660, 1);
     if (read_try == SEM_FAILED)
     {
         std::cout << "OUT";
         exit(1);
     }
 
-    resource_semaphore = sem_open(RESOURCE_SEMAPHORE, IPC_CREAT, 0660, 1);
+    resource_semaphore = sem_open(RESOURCE_SEMAPHORE, O_CREAT, 0660, 1);
     if (resource_semaphore == SEM_FAILED)
     {
         std::cerr << "ERROR";

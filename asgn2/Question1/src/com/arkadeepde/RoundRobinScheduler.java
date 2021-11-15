@@ -44,7 +44,7 @@ public class RoundRobinScheduler implements Scheduler {
                 Job job = roundRobinQueue.poll();
 
                 var burstTimes = job.getBurstTimes();
-                System.out.println(burstTimes);
+
                 int cpuBurst = burstTimes.removeFirst();
 
                 if (cpuBurst > TIME_QUANTUM) {
