@@ -27,7 +27,7 @@ int main()
                           Producer producer(buffer);
                           for (int i = 0; i < c; ++i)
                           {
-                              producer.produce(1);
+                              producer.produce(i + 1);
                           };
                       });
     }

@@ -57,6 +57,7 @@ void Producer<T>::produce(T value)
 {
     sem_wait(producer_semaphore);
     sem_wait(resource_semaphore);
+    std::cout << getpid() << " produced: " << value << std::endl;
     m_buffer.push(value);
     sem_post(consumer_semaphore);
     sem_post(resource_semaphore);

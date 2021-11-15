@@ -60,7 +60,8 @@ T Consumer<T>::consume(Counter &counter)
     sem_wait(consumer_semaphore);
     sem_wait(resource_semaphore);
     T result = m_buffer.pop();
-    counter.add(*((int *)(void *)(&result)));
+    std::cout << getpid() << " consumed: " << result << std::endl;
+    counter.add(1);
     sem_post(producer_semaphore);
     sem_post(resource_semaphore);
     return result;
